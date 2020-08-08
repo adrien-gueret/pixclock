@@ -1,4 +1,5 @@
 # PixClock
+[https://adrien-gueret.github.io/pixclock/](https://adrien-gueret.github.io/pixclock/)
 
 ## A simple clock with pixel art backgrounds
 
