@@ -4,4 +4,4 @@
 
 Useful to initiate small children to hours.
 
-Background images: __BitDay__ from [windd.info)(https://windd.info/themes/BitDay.html).
+Background images: __BitDay__ from [windd.info](https://windd.info/themes/BitDay.html).
