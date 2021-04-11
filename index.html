@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <title>PixClock</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" />
         <style>
@@ -180,13 +182,33 @@
                 const clockElement = document.getElementById('clock');
                 const fullscreenButton = document.getElementById('toggle-fullscreen');
 
-                fullscreenButton.onclick = function() {
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                    } else {
-                        document.body.requestFullscreen();
-                    }
-                };
+                const exitFullscreen =
+                    document.exitFullscreen ||
+                    document.webkitCurrentFullScreenElement || 
+                    document.mozCancelFullScreen ||
+                    document.msExitFullscreen;
+
+                const requestFullscreen =
+                    document.body.requestFullscreen ||
+                    document.body.webkitRequestFullscreen ||
+                    document.body.mozRequestFullScreen ||
+                    document.body.msRequestFullscreen;
+
+                const isFullScreenEnabled = exitFullscreen && requestFullscreen;
+
+                if (isFullScreenEnabled) {
+                    fullscreenButton.onclick = function() {
+                        const fullScreenElement = document.fullscreenElement || document.webkitCurrentFullScreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+                        
+                        if (document.fullscreenElement) {
+                            exitFullscreen.bind(document)();
+                        } else {
+                            requestFullscreen.bind(document.body)();
+                        }
+                    };
+                } else {
+                    fullscreenButton.parentNode.removeChild(fullscreenButton);
+                }
 
                 function padLeft(integer) {
                     if (integer < 10) {
